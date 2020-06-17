@@ -7,10 +7,6 @@ let Letter = function (character) {
             return (' ');
         }
 
-        else if (this.guessed) {
-            return (this.character)
-        }
-
         else if (this.character == "'") {
             return ("'")
         }
@@ -19,8 +15,29 @@ let Letter = function (character) {
             return ('-')
         }
 
-        else if (this.character
+        else if (this.guessed) {
+            return (this.character)
+        }
+
+        else if (this.guessed === false) {
+            return ("?")
         }
     }
+    this.letterGuess = function (guess) {
+        if (guess.toLowerCase() === this.character.toLowerCase()) {
+            this.guessed = true;
+            return true
+        }
+        return false
+    }
 }
+module.exports = Letter
 
+let a = new Letter("a")
+console.log(a)
+console.log(a.display)
+console.log(a.display())
+console.log(a.letterGuess("b"))
+console.log(a.display())
+console.log(a.letterGuess("a"))
+console.log(a.display())
