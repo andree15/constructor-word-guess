@@ -23,4 +23,26 @@ function guessWord () {
     if (guesses > 0 && points > 5){
         console.log(chosenword.display())
     }
+
+    inquirer.prompt([{
+        name: "txt",
+        message:"Guess a letter",
+        validate: function (str){
+            if (str.length <1) return false;
+        } 
+    }
+]).then(function (guessedLetter){
+    var guess = guessedLetter.txt;
+
+    chosenWord.checkGuess(guess);
+
+    if (randomWord.indexOf(guess) === -1) {
+        guesses--;
+        console.log("incorrect" + guesses + " guesses remaining")
+    } else {
+        if (points < 5)
+        console.log('correct')
+        chooseRandomWord();
+    }
+})
 }
