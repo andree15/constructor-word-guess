@@ -18,6 +18,6 @@
 <img src="/images/incorrectguess.png">
 
 <h2>Yes/No</h2>
-<img src="/images/y:n.png>
+<img src="/images/y:n.png">
 
 
