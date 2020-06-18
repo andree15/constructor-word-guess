@@ -3,34 +3,36 @@ let inquirer = require("inquirer")
 let Word = require("./Word.js")
 
 let guesses = 10
-let correct = 0
+let points = 0
 
 let guessWords = ['bacon', 'pancakes', 'potatoes', 'biscuit', 'frittatas']
-let randomWord
-let chosenword
+let randomWord;
+let chosenWord;
 
 function startGame() {
     console.log("Guess the Breakfast Food!")
 }
 
-function choseRanomWord() {
-    randomWord = guessWords[Math.floor(Math.ramdom() * guessWords.length)]
+function chooseRandomWords() {
+    randomWord = guessWords[Math.floor(Math.random() * guessWords.length)]
 
-    chosenword = new Word(randomWord)
+    chosenWord = new Word(randomWord)
 }
 
 function guessWord() {
-    if (guesses > 0 && points > 5) {
+    if (guesses > 0 && points < 5) {
 
-        console.log(chosenword.display());
+        console.log(chosenWord.display());
 
 
         inquirer.prompt([
             {
                 name: "txt",
-                message: "Guess a letter",
+                message: "Guess a letter!",
                 validate: function (str) {
-                    if (str.length < 1) return false;
+                    if (str.length != 1) return false;
+                    var regEx = new RegExp("^[a-zA-Z\s]{1,1}$");
+                    return regEx.test(str);
                 }
             }
         ]).then(function (guessedLetter) {
@@ -39,7 +41,7 @@ function guessWord() {
 
             chosenWord.checkGuess(guess);
 
-            if (randomWord.indexOf(guess) === -1) {
+            if (randomWord.toLowerCase().indexOf(guess.toLowerCase()) === -1) {
                 guesses--;
                 console.log("incorrect" + guesses + " guesses remaining")
             }
@@ -49,8 +51,8 @@ function guessWord() {
                 }
             }
 
-            if (randomWord === chosenword.display()) {
-                console.log(chosenword.display());
+            if (randomWord === chosenWord.display()) {
+                console.log(chosenWord.display());
                 guesses = 10
                 points++;
 
@@ -115,7 +117,22 @@ function winGame() {
             default: true
         }
     ])
-    .then(function(inquirerResonse))
+    .then(function(inquirerResonse){
+        if (inquirerResponse.confirm) {
+            guesses = 10;
+            points = 0;
+            chooseRandomWords();
+            guessWord();
+        }
+        else {
+            console.log("bye bye")
+            process.exit();
+        }
+    }
+    )
 }
-        
+
+startGame();
+chooseRandomWords();
+guessWord();
 

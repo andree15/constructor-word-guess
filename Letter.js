@@ -17,20 +17,8 @@ let Letter = function (character) {
     this.letterGuess = function (guess) {
         if (guess === this.character) {
             this.guessed = true;
-            return true
         }
-        return false
     }
 }
-//allows for export
-module.exports = Letter
 
-//tests
-// let a = new Letter("a")
-// console.log(a)
-// console.log(a.display)
-// console.log(a.display())
-// console.log(a.letterGuess("b"))
-// console.log(a.display())
-// console.log(a.letterGuess("a"))
-// console.log(a.display())
+module.exports = Letter
